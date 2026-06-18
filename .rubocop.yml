@@ -1,0 +1,9 @@
+# The gem's own lint config — inherits the shipped rules and dogfoods them on
+# the gemspec. spec/ is excluded because its fixtures intentionally carry
+# violations and its examples are test scaffolding, not house-style code.
+inherit_from: rubocop.yml
+
+AllCops:
+  Exclude:
+    - spec/**/*
+    - vendor/**/*

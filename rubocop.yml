@@ -1,0 +1,57 @@
+# Kokorono Ruby styling for Rails.
+#
+# Inherits stock rubocop-rails-omakase and layers a thin Kokorono house style on
+# top. Consume from a repo with a one-line .rubocop.yml:
+#
+#   inherit_gem: { rubocop-rails-kokorono-omakase: rubocop.yml }
+#
+inherit_gem:
+  rubocop-rails-omakase: rubocop.yml
+
+# --- Naming layer -----------------------------------------------------------
+# omakase disables the whole Naming department, so each cop the team keeps is
+# re-enabled explicitly here.
+
+# Memoized instance variables use a leading underscore: `@_foo ||= ...`.
+Naming/MemoizedInstanceVariableName:
+  Enabled: true
+  EnforcedStyleForLeadingUnderscores: required
+
+# snake_case for methods and variables.
+Naming/MethodName:
+  Enabled: true
+Naming/VariableName:
+  Enabled: true
+
+# CamelCase classes/modules, SCREAMING_SNAKE or CamelCase constants.
+Naming/ClassAndModuleCamelCase:
+  Enabled: true
+Naming/ConstantName:
+  Enabled: true
+
+# Predicate methods read as questions (no `is_` / `get_` prefixes).
+# (Renamed from Naming/PredicateName in RuboCop 1.x.)
+Naming/PredicatePrefix:
+  Enabled: true
+
+# --- Trailing commas in multiline literals ----------------------------------
+# omakase's defaults enforce no_comma; Kokorono keeps the trailing comma so
+# adding a line is a one-line diff.
+Style/TrailingCommaInArguments:
+  Enabled: true
+  EnforcedStyleForMultiline: comma
+Style/TrailingCommaInArrayLiteral:
+  EnforcedStyleForMultiline: comma
+Style/TrailingCommaInHashLiteral:
+  EnforcedStyleForMultiline: comma
+
+# --- Omit parentheses for method calls with arguments -----------------------
+Style/MethodCallWithArgsParentheses:
+  Enabled: true
+  EnforcedStyle: omit_parentheses
+  AllowParenthesesInMultilineCall: true
+
+# Clashes with omit_parentheses (omakase leaves it off anyway); keep it off so
+# `super(...)` is not forced into parentheses against the omit-parens style.
+Style/SuperWithArgsParentheses:
+  Enabled: false
