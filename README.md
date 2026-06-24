@@ -5,6 +5,7 @@ Kokorono's shared RuboCop configuration. It inherits [rubocop-rails-omakase](htt
 ## What it layers on omakase
 
 - **Naming discipline** — omakase turns the whole `Naming` department off; this re-enables the cops the team keeps: `@_foo` memoization (`Naming/MemoizedInstanceVariableName`), snake_case methods and variables, CamelCase classes/modules, constant naming, and predicate naming.
+- **Redundant directive cleanup** — omakase turns the whole `Lint` department off; this re-enables the cops that flag stale `# rubocop:disable` / `# rubocop:enable` comments (`Lint/RedundantCopDisableDirective`, `Lint/RedundantCopEnableDirective`), both autocorrectable.
 - **Trailing commas** in multiline arrays, hashes, and arguments (omakase enforces the opposite).
 - **Omit parentheses** for method calls with arguments (`Style/MethodCallWithArgsParentheses`), with `Style/SuperWithArgsParentheses` disabled to avoid the clash.
 

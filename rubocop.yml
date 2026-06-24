@@ -34,6 +34,20 @@ Naming/ConstantName:
 Naming/PredicatePrefix:
   Enabled: true
 
+# --- Lint layer -------------------------------------------------------------
+# omakase disables the whole Lint department, so cops the team keeps are
+# re-enabled explicitly here.
+
+# Flags `# rubocop:disable` comments that no longer suppress anything. Autocorrect
+# (`rubocop -a`) removes them, so disables don't outlive the offense they silenced.
+Lint/RedundantCopDisableDirective:
+  Enabled: true
+
+# Flags `# rubocop:enable` comments with no matching disable. Autocorrect removes
+# them, so a re-enable can't linger after the disable it paired with is gone.
+Lint/RedundantCopEnableDirective:
+  Enabled: true
+
 # --- Trailing commas in multiline literals ----------------------------------
 # omakase's defaults enforce no_comma; Kokorono keeps the trailing comma so
 # adding a line is a one-line diff.
