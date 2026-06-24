@@ -67,6 +67,16 @@ RSpec.describe "rubocop-rails-kokorono-omakase config" do
     expect(cops_for.call(src)).to include("Naming/PredicatePrefix")
   end
 
+  it "flags redundant rubocop:disable directives" do
+    src = "x = 1 # rubocop:disable Style/StringLiterals\n"
+    expect(cops_for.call(src)).to include("Lint/RedundantCopDisableDirective")
+  end
+
+  it "flags redundant rubocop:enable directives" do
+    src = "# rubocop:enable Style/StringLiterals\nx = 1\n"
+    expect(cops_for.call(src)).to include("Lint/RedundantCopEnableDirective")
+  end
+
   it "does not force parentheses on super (clash guard)" do
     src = "def run(value)\n  super(value)\nend\n"
     expect(cops_for.call(src)).not_to include("Style/SuperWithArgsParentheses")
