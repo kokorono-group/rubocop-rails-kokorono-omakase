@@ -1,6 +1,6 @@
 Gem::Specification.new do |spec|
   spec.name        = "rubocop-rails-kokorono-omakase"
-  spec.version     = "0.1.0"
+  spec.version     = "1.0.0"
   spec.authors     = [ "Kokorono" ]
   spec.email       = [ "developers@kokorono.co.jp" ]
   spec.summary     = "Kokorono Ruby styling for Rails"
