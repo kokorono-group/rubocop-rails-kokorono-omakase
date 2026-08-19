@@ -1,9 +1,23 @@
 name: ci
 
+# Bare `push`, with no `pull_request`. A pull_request trigger needs GitHub's
+# synthesized merge ref, and GitHub stops producing it once it marks a PR
+# CONFLICTING, at which point the workflow stops running entirely rather than
+# failing. Carrying both would also double-run every PR, since a push to a PR
+# branch fires each trigger once. See infra's docs/ci-standard.md.
 on:
   push:
-    branches: [main]
-  pull_request:
+
+# Cancel a superseded run on a feature branch, but let a default-branch run
+# finish: that run is the one that establishes whether main is green, so
+# cancelling it to start another leaves a gap in the record.
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: ${{ github.ref != 'refs/heads/main' }}
+
+# Nothing here needs more than reading the code.
+permissions:
+  contents: read
 
 jobs:
   test:
@@ -13,7 +27,11 @@ jobs:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
       - uses: ruby/setup-ruby@95ef2b042f9d7a56d8268cba8559e2842e2ad01b # v1
         with:
-          ruby-version: '4.0.6'
+          # From .ruby-version, which already pins 4.0.6, rather than a second
+          # copy of that value here. Dependabot's github-actions ecosystem
+          # bumps `uses:` refs and never input values, so a literal is the one
+          # pin nothing ever moves.
+          ruby-version: .ruby-version
           bundler-cache: true
       - name: Config loads cleanly
         run: bundle exec rubocop --config rubocop.yml --show-cops > /dev/null
