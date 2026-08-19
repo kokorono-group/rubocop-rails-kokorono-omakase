@@ -31,6 +31,20 @@ inherit_gem: { rubocop-rails-kokorono-omakase: rubocop.yml }
 
 A repo with a local custom cop (e.g. `oyatoko-crm`'s `Kokosapo/DraftScope`) keeps its `require` and enable on top of that line.
 
+## CI
+
+Before editing anything in `.github/workflows/`, read `docs/ci-standard.md` in
+`kokorono-group/infra`. It carries the fleet-wide rules for triggers,
+concurrency, permissions, timeouts, pinned service images, toolchain versions,
+and job naming, each paired with the reason it exists.
+
+The reasons are the point. Two of the rules read as backwards on first
+encounter and both have an incident behind them: the bare `on: push` trigger,
+and the rule about job-level versus step-level timeouts.
+
+Nothing in this repo enforces the standard. `bin/ci-conformance` in infra
+reports whether this repo still conforms, and runs when someone runs it.
+
 ## Development
 
 ```bash
