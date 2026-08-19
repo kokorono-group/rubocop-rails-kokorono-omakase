@@ -3,8 +3,13 @@ name: ci
 # Bare `push`: a pull_request trigger stops running entirely once GitHub marks
 # a PR CONFLICTING, and carrying both would double-run every PR. See infra's
 # docs/ci-standard.md.
+# `branches: ['**']` rather than a filterless `push`: that also fires on tag
+# pushes, so every release tag would run the whole suite against a ref that is
+# not a deployable app state. `tags-ignore` is NOT the alternative -- with no
+# branch filter present GitHub runs the workflow on no branch push at all.
 on:
   push:
+    branches: ['**']
 
 # Guarded rather than a plain `true`: a default-branch run is the one that
 # establishes whether main is green. See infra's docs/ci-standard.md.
