@@ -4,4 +4,6 @@ source "https://rubygems.org"
 # transitively rubocop / rubocop-rails / rubocop-performance).
 gemspec
 
+# Runs spec/config_spec.rb, which lints snippets with the shipped rubocop.yml
+# and asserts which cops fire.
 gem "rspec", require: false
